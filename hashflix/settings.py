@@ -94,23 +94,23 @@ DATABASES = {
 }
 
 # Configurando a variavel de ambiente do servidor remoto. Fonte: dj_database_url
-# import dj_database_url
-#
-# DATABASE_URL = os.getenv("DATABASE_URL")
-# if DATABASE_URL:
-#     DATABASES = {
-#         'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
-#     }
-
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',  # fallback local
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
+    }
+
+# import dj_database_url
+#
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='sqlite:///db.sqlite3',  # fallback local
+#         conn_max_age=600,
+#         ssl_require=True
+#     )
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
