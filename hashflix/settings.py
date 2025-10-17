@@ -97,13 +97,17 @@ DATABASES = {
 import dj_database_url
 
 
-#DATABASE_URL = os.getenv("DATABASE_URL")
-DATABASE_URL = 'postgresql://postgres:AQdzWVqsEuSWqUyaywquUVAlcBRwNqXk@postgres.railway.internal:5432/railway'
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
-    }
+# DATABASE_URL = os.getenv("DATABASE_URL")
+# if DATABASE_URL:
+#     DATABASES = {
+#         'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
+#     }
 
+DATABASES['default'] = dj_database_url.parse(
+    'postgresql://postgres:AQdzWVqsEuSWqUyaywquUVAlcBRwNqXk@postgres.railway.internal:5432/railway',
+    conn_max_age=600,
+    conn_health_checks=True,
+)
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 AUTH_USER_MODEL = "filme.Usuario" #Informa ao Django que o modelo de usuario não é mais a padrão e sim a que foi construida.
