@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
-from django.conf.global_settings import AUTH_USER_MODEL, LOGIN_REDIRECT_URL
+from django.conf.global_settings import AUTH_USER_MODEL, LOGIN_REDIRECT_URL, SECRET_KEY, CSRF_TRUSTED_ORIGINS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +23,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-($ikb#g5g1g1jmg#6z2mdt%cqldz_8n+y#qc^2bak53yhr#%ll'
+TOKEN_CSRF = os.getenv('TOKEN_CSRF')
+if TOKEN_CSRF:
+    SECRET_KEY = TOKEN_CSRF
+    CSRF_TRUSTED_ORIGINS = ['https://projetofakeflixdjango-production.up.railway.app/']
+else:
+    SECRET_KEY = 'django-insecure-($ikb#g5g1g1jmg#6z2mdt%cqldz_8n+y#qc^2bak53yhr#%ll'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://projetofakeflixdjango-production.up.railway.app/", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -89,7 +95,7 @@ DATABASES = {
 
 # Configurando a variavel de ambiente do servidor remoto. Fonte: dj_database_url
 import dj_database_url
-import os
+
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL:
